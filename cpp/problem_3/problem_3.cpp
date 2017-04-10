@@ -67,8 +67,9 @@ int main(int argc, char *argv[]){
     return 1;
   }
   long target_number = atol(argv[1]);
-  long current_number = 2;
+  long current_number = 3;
   node* known_primes = NULL;
+  add_to_end_of_list(known_primes, 2);  
   node* prime_factors = NULL;
   
   while(true){
@@ -92,7 +93,7 @@ int main(int argc, char *argv[]){
     if (target_number == 1 || is_in_primes){
       break;
     };
-    current_number = current_number + 1;
+    current_number = current_number + 2;
   };
   print_list(prime_factors);
 }
