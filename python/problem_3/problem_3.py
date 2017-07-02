@@ -12,32 +12,50 @@ Options:
 from docopt import docopt
 
 
-def prime_factorize(target_number):
-    known_primes = []
-    prime_factors = []
-    current_number = 2
+def _is_prime(number, known_primes):
+    for prime_number in known_primes:
+        if number % prime_number == 0:
+            return False
+    return True
+
+
+def _prime_factorize(num, factors, known_primes, possible_factor):
+    if num % possible_factor == 0:
+        factors.append(possible_factor)
+        num = num / possible_factor
+        factor_index = 0
+        for prime in known_primes:
+            _prime_factorize(num, factors[factor_index:], known_primes, prime)
+            factor_index += 1
+    return num, factors
+
+
+def get_prime_factors(target_number):
+    primes = []
+    current_number = 3
+    target_number, prime_factors = _prime_factorize(
+        target_number, [], primes, 2)
     while True:
-        is_prime = 1
-        for prime_number in known_primes:
-            if current_number % prime_number == 0:
-                is_prime = 0
-        if is_prime:
-            known_primes.append(current_number)
-            if target_number % current_number == 0:
-                prime_factors.append(current_number)
-                target_number = target_number / current_number
-                for prime_number in known_primes:
-                    if target_number % prime_number == 0:
-                        prime_factors.append(prime_number)
-                        target_number = target_number / prime_number
-        current_number += 1
-        if target_number == 1 or target_number in known_primes:
+        # print 'current_number: %s,\nknown_primes: %s,\nfactors: %s' % (
+        #     current_number,
+        #     primes,
+        #     prime_factors
+        # )
+        if _is_prime(current_number, primes):
+            primes.append(current_number)
+            target_number, prime_factors = _prime_factorize(
+                target_number, prime_factors, primes, current_number)
+        current_number += 2
+        if target_number == 1:
+            break
+        elif target_number in primes:
+            prime_factors.append(target_number)
             break
     return prime_factors
 
 if __name__ == '__main__':
     args = docopt(__doc__)
     target_number = int(args['<max_number>'])
-    prime_factors = prime_factorize(target_number)
+    prime_factors = get_prime_factors(target_number)
     print "Prime Factors: %s" % ', '.join([str(x) for x in prime_factors])
     print "Max Prime Factor: %d" % max(prime_factors)
