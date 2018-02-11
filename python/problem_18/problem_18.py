@@ -1,4 +1,6 @@
 """
+This never ended up working. See problem_18a.py
+
 By starting at the top of the triangle below and moving to adjacent numbers
 on the row below, the maximum total from top to bottom is 23.
 
@@ -43,6 +45,12 @@ from docopt import docopt
 
 
 def build_test_triangle():
+    """
+    Build triangle used in test to build solution.
+
+    :returns: The test triangle in problem description
+    :rtype: list()
+    """
     return [
         [3],
         [7, 4],
@@ -52,6 +60,12 @@ def build_test_triangle():
 
 
 def build_triangle():
+    """
+    Build the actual triangle used in problem
+
+    :returns: The actual triangle in problem description
+    :rtype: list()
+    """    
     return [
         [75],
         [95, 64],
@@ -72,6 +86,14 @@ def build_triangle():
 
 
 def run(test=False):
+    """
+    Get a triangle and choose best path by max of next row.
+
+    :param test: Whether or not to use test triangle
+    :type test: bool()
+    :returns: The sum of the path with the largest numbers.
+    :rtype: int()
+    """
     if test:
         triangle = build_test_triangle()
     else:
@@ -80,20 +102,15 @@ def run(test=False):
     current_column = 0
     final_sum = 0
     while current_row <= len(triangle)-1:
-        print "adding: ", triangle[current_row][current_column]
-        final_sum += triangle[current_row][current_column]
+        final_sum += triangle[current_row][current_column]   # start a single top of pyramid
         if current_row + 1 < len(triangle):
-            next_row = triangle[current_row + 1]
+            next_row = triangle[current_row + 1]             # find max of two possible nexts.
             next_column = max([
                 next_row[current_column],
                 next_row[current_column + 1]
             ])
-            print "max number is: ", next_column
-            print "options: %s" % next_row[current_column:]
-            print "this row: ", triangle[current_row], " on column %s" % current_column
-            current_column = next_row[current_column:].index(next_column) + len(next_row[:current_column])
-            print "cc: ", current_column
-            print "next row: ", next_row, " on column %s" % current_column
+            current_column = next_row[current_column:].index(next_column)
+            current_column += len(next_row[:current_column])
         current_row += 1
     return final_sum
 
@@ -101,4 +118,4 @@ def run(test=False):
 if __name__ == '__main__':
     args = docopt(__doc__)
     answer = run(test=args['--test'])
-    print "Answer: %d" % answer
+    print("Answer: {}".format(answer))

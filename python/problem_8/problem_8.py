@@ -37,6 +37,15 @@ from docopt import docopt
 
 
 def run(sequence_length):
+    """
+    Provided a sequence length, find the numbers in this arbitrary
+    sequence that have the highest product
+
+    :param sequence_length: How many numbers in a row to consider
+    :type sequence_length: int()
+    :returns: The highest product in the following number of x sequence
+    :rtype: int()
+    """
     number = [
         '73167176531330624919225119674426574742355349194934',
         '96983520312774506326239578318016984801869478851843',
@@ -82,4 +91,4 @@ def run(sequence_length):
 if __name__ == '__main__':
     args = docopt(__doc__)
     product, factors = run(int(args['<sequence_length>']))
-    print "Answer: %d (%s)" % (product, '*'.join([str(x) for x in factors]))
+    print("Answer: %d (%s)" % (product, '*'.join([str(x) for x in factors])))

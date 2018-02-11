@@ -1,6 +1,6 @@
 """
 In the 20x20 grid below, four numbers along a diagonal line
-have been marked
+have been marked (in [brackets])
 
 08 02 22 97 38 15 00 40 00 75 04 05 07 78 52 12 50 77 91 08
 49 49 99 40 17 81 18 57 60 87 17 40 98 43 69 48 04 56 62 00
@@ -36,10 +36,17 @@ Options:
     -h --help        shows this screen.
 """
 from docopt import docopt
+from functools import reduce
 import operator
 
 
 def build_grid():
+    """
+    Returns a list implementation of the problems specific grid
+
+    :returns: A list / grid
+    :rtpye: list()
+    """
     return [
         [8, 2, 22, 97, 38, 15, 0, 40, 0, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8],
         [49, 49, 99, 40, 17, 81, 18, 57, 60, 87, 17, 40, 98, 43, 69, 48, 4, 56, 62, 0],
@@ -65,44 +72,118 @@ def build_grid():
 
 
 def multiply_factors(list_of_factors):
+    """
+    Multiple a list of numbers together
+
+    :param list_of_factors: A list of numbers
+    :type list_of_factors: list()
+    :returns: The product of all the numbers
+    :rtype: int()
+    """
     return reduce(operator.mul, list_of_factors, 1)
 
 
 def get_horizontal_digits(sequence_length, grid, x, y):
+    """
+    Provided a location on the grid, get horizontal adjacent digits
+
+    :param sequence_length: How many digits to get
+    :type sequence_length: int()
+    :param grid: The problems grid in list form
+    :type grid: list()
+    :param x: X coordinate in the grid
+    :type x: int()
+    :param y: Y coordinate in the grid
+    :type y: int()
+    :returns: A list of digits from the grid
+    :rtype: list()
+    """
     digits = []
     if len(grid[y])-1 >= x + sequence_length - 1:
-        for seq in xrange(0, sequence_length):
+        for seq in range(0, sequence_length):
             digits.append(grid[y][x + seq])
     return digits
 
 
 def get_vertical_digits(sequence_length, grid, x, y):
+    """
+    Provided a location on the grid, get vertical adjacent digits
+
+    :param sequence_length: How many digits to get
+    :type sequence_length: int()
+    :param grid: The problems grid in list form
+    :type grid: list()
+    :param x: X coordinate in the grid
+    :type x: int()
+    :param y: Y coordinate in the grid
+    :type y: int()
+    :returns: A list of digits from the grid
+    :rtype: list()
+    """
     digits = []
     if len(grid)-1 >= y + sequence_length - 1:
-        for seq in xrange(0, sequence_length):
+        for seq in range(0, sequence_length):
             digits.append(grid[y + seq][x])
     return digits
 
 
 def get_diag_up_digits(sequence_length, grid, x, y):
+    """
+    Provided a location on the grid, get diagonal-up adjacent digits
+
+    :param sequence_length: How many digits to get
+    :type sequence_length: int()
+    :param grid: The problems grid in list form
+    :type grid: list()
+    :param x: X coordinate in the grid
+    :type x: int()
+    :param y: Y coordinate in the grid
+    :type y: int()
+    :returns: A list of digits from the grid
+    :rtype: list()
+    """
     digits = []
     if (y - (sequence_length - 1) >= 0) \
        and (len(grid[y])-1 >= x + (sequence_length - 1)):
-        for seq in xrange(0, sequence_length):
+        for seq in range(0, sequence_length):
             digits.append(grid[y - seq][x + seq])
     return digits
 
 
 def get_diag_down_digits(sequence_length, grid, x, y):
+    """
+    Provided a location on the grid, get diagonal-down adjacent digits
+
+    :param sequence_length: How many digits to get
+    :type sequence_length: int()
+    :param grid: The problems grid in list form
+    :type grid: list()
+    :param x: X coordinate in the grid
+    :type x: int()
+    :param y: Y coordinate in the grid
+    :type y: int()
+    :returns: A list of digits from the grid
+    :rtype: list()
+    """
     digits = []
     if (y + (sequence_length - 1) <= len(grid)-1) \
        and (len(grid[y])-1 >= x + (sequence_length - 1)):
-        for seq in xrange(0, sequence_length):
+        for seq in range(0, sequence_length):
             digits.append(grid[y + seq][x + seq])
     return digits
 
 
 def find_largest_product_sequence_in_grid(grid, sequence_length):
+    """
+    Provided a grid and a sequence length, find largest product
+
+    :param sequence_length: How many digits to get
+    :type sequence_length: int()
+    :param grid: The problems grid in list form
+    :type grid: list()
+    :returns: A product of digits in the grid
+    :rtype: int()
+    """
     x = 0
     y = 0
     max_product = 0
@@ -114,7 +195,7 @@ def find_largest_product_sequence_in_grid(grid, sequence_length):
                 'd_up': get_diag_up_digits(sequence_length, grid, x, y),
                 'd_down': get_diag_down_digits(sequence_length, grid, x, y)
             }
-            for description, digits in groups.iteritems():
+            for description, digits in groups.items():
                 product = multiply_factors(digits)
                 if product >= max_product:
                     max_product = product
@@ -134,6 +215,7 @@ def run(sequence_length):
         sequence_length
     )
 
+
 if __name__ == '__main__':
     args = docopt(__doc__)
-    print "Answer: %d" % run(int(args['<sequence_length>']))
+    print("Answer: %d" % run(int(args['<sequence_length>'])))

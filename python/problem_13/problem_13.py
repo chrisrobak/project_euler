@@ -224,4 +224,4 @@ def run():
 
 if __name__ == '__main__':
     args = docopt(__doc__)
-    print "Answer: %s" % run()
+    print("Answer: %s" % run())

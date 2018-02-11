@@ -1,4 +1,8 @@
 """
+see problem_18.py for first attepmt (top->down). This one goes from
+bottom up but same kind of idea.
+
+
 By starting at the top of the triangle below and moving to adjacent numbers
 on the row below, the maximum total from top to bottom is 23.
 
@@ -43,6 +47,12 @@ from docopt import docopt
 
 
 def build_test_triangle():
+    """
+    Build test triangle from problem description
+
+    :returns: The triangle in list form
+    :rtype: list()
+    """
     return [
         [3],
         [7, 4],
@@ -52,6 +62,12 @@ def build_test_triangle():
 
 
 def build_triangle():
+    """
+    Build real triangle from problem description
+
+    :returns: The triangle in list form
+    :rtype: list()
+    """    
     return [
         [75],
         [95, 64],
@@ -72,6 +88,16 @@ def build_triangle():
 
 
 def get_best_path(rows, row_number):
+    """
+    Start from bottom of triangle and simplify upward.
+
+    :param rows: A list of list of numbers representing the triangle.
+    :type rows: list()
+    :param row_number: Which row we're on
+    :type row_number: int()
+    :returns: The largest sum from the triangle
+    :rtype: int()
+    """
     col_number = 0
     for column in rows[row_number]:
         rows[row_number][col_number] = max(
@@ -92,4 +118,4 @@ if __name__ == '__main__':
     else:
         triangle = build_triangle()
     answer = get_best_path(triangle, len(triangle) - 2)
-    print "Answer: %d" % answer
+    print("Answer: {}".format(answer))

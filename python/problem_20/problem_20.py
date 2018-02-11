@@ -11,18 +11,35 @@ Usage:
 
 Options:
     -h --help      Shows this screen.
-    --test         Use "test" triangle
 """
 from docopt import docopt
+from functools import reduce
 import operator
 
 
 def product(list_of_numbers):
+    """
+    Multiply all numbers in a list together
+
+    :param list_of_numbers: A list of numbers
+    :type list_of_numbers: list()
+    :returns The product of all numbers in the list
+    :rtype: int()
+    """
     return reduce(operator.mul, list_of_numbers, 1)
 
 
 def run(max_number):
-    answer = list([x for x in xrange(1, max_number + 1)])
+    """
+    Multiple every number up to <max_number>
+    Then add the numbers of the product
+
+    :param max_number: The max number to include
+    :type max_number: int()
+    :returns: The sum of the digits of the product
+    :rtype: int()
+    """
+    answer = list([x for x in range(1, max_number + 1)])
     answer = product(answer)
     answer = sum([int(x) for x in str(answer)])
     return answer
@@ -31,4 +48,4 @@ def run(max_number):
 if __name__ == '__main__':
     args = docopt(__doc__)
     answer = run(int(args['<max_number>']))
-    print "Answer: %s" % answer
+    print("Answer: {}".format(answer))

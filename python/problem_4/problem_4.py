@@ -16,22 +16,27 @@ from docopt import docopt
 
 
 def is_palindrome(num):
-    num = str(num)
-    start_count = 0
-    while start_count < len(num) - 1:
-        left_side = int(num[start_count:start_count+1])
-        right_index_left = (start_count*-1)-1
-        if right_index_left + 1 == 0:
-            right_side = int(num[right_index_left:])
-        else:
-            right_side = int(num[right_index_left: right_index_left + 1])
-        if left_side != right_side:
-            return False
-        start_count += 1
-    return True
+    """
+    Check if a number is a palindrome
+
+    :param num: The number to check
+    :type num: int()
+    :returns: Whether or not the number is a palindrome
+    :rtype: bool()
+    """
+    return str(num) == str(num)[::-1]
 
 
 def get_max_palindrome_by_num_digits(num_digits):
+    """
+    Provided number of digits, find largest palindrome number created
+    by multiplying two numbers of x digits.
+
+    :param num_digits: how 'big' a number should be ie - 2 = 99, 3 = 999
+    :type num_digits: int()
+    :returns: A palindromic product
+    :rtype: int()
+    """
     max_product = 0
     max_digit = int("9" * num_digits)
     next_digit = max_digit
@@ -51,4 +56,4 @@ if __name__ == '__main__':
     args = docopt(__doc__)
     num_digits = int(args['<num_digits>'])
     max_palindrome = get_max_palindrome_by_num_digits(num_digits)
-    print "Max Palindrome: %s" % str(max_palindrome)
+    print("Max Palindrome: {}".format(max_palindrome))

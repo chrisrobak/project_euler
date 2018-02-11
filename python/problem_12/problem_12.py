@@ -32,6 +32,14 @@ from docopt import docopt
 
 
 def get_num_divisors(num):
+    """
+    Get how many divisors a number has
+
+    :param num: The number to get divisors for
+    :type num: int()
+    :returns: The number of divisors <num> as
+    :rtype: int()
+    """
     if num == 1:
         return 1
     current_number = 1
@@ -44,6 +52,15 @@ def get_num_divisors(num):
 
 
 def run(num_divisors):
+    """
+    Provided min number of divisors find lowest number that
+    has x amount of divisors.
+
+    :param num_divisors: How many divisors to check for
+    :type num_divisors: int()
+    :returns: The first number to have <num_divisors>
+    :rtype: int()
+    """
     number = 1
     next_number = 2
     max_factors = 0
@@ -51,19 +68,13 @@ def run(num_divisors):
         divisors = get_num_divisors(number)
         if divisors > num_divisors:
             max_factors = divisors
-            print "max: %s -- %s" % (
-                max_factors, number
-            )            
             return number
         if divisors > max_factors:
             max_factors = divisors
-            print "max: %s -- %s" % (
-                max_factors, number
-            )
         number = number + next_number
         next_number += 1
 
 
 if __name__ == '__main__':
     args = docopt(__doc__)
-    print "Answer: %d" % run(int(args['<num_divisors>']))
+    print("Answer: %d" % run(int(args['<num_divisors>'])))

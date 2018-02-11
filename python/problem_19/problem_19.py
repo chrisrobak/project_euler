@@ -20,6 +20,7 @@ Options:
     --test         Use "test" triangle
 """
 from docopt import docopt
+import six
 
 
 class Year(object):
@@ -38,6 +39,14 @@ class Year(object):
 
     @staticmethod
     def _get_month_by_name(month):
+        """
+        Get month number (starting at 0) based on name
+
+        :param month: The months name
+        :type month: str()
+        :returns: The month number
+        :rtype: int()
+        """
         month = str(month).lower().replace('.', '')
         if month in ('jan', 'january'):
             return 0
@@ -66,8 +75,16 @@ class Year(object):
         raise ValueError('Month :%s now known!' % month)
 
     @staticmethod
-    def _days_in_month(month, leap_year=0):
-        if isinstance(month, basestring):
+    def _days_in_month(month, leap_year=False):
+        """
+        Return how many days are in a month
+
+        :param month: Which month to get number of days for
+        :type month: int() or str()
+        :param leap_year: Whether or not the year is a leap year
+        :type leap_year: bool()
+        """
+        if isinstance(month, six.string_types):
             month_num = Year._get_month_by_name(month)
         else:
             month_num = int(month)
@@ -82,6 +99,14 @@ class Year(object):
 
     @staticmethod
     def is_leap_year(year):
+        """
+        Check if year is a leap year
+
+        :param year: The year to check
+        :type year: int()
+        :returns: Whether or not the year is a leap year
+        :rtype: bool()
+        """
         if year % 4 == 0:
             if year % 100 == 0:
                 if year % 400 == 0:
@@ -92,7 +117,19 @@ class Year(object):
 
     @staticmethod
     def get_day_name_at_date(year, month, day):
-        if isinstance(year, basestring):
+        """
+        Get the name of the day provided a date
+
+        :param year: The year
+        :type year: int()
+        :param month: The month
+        :type month: int()
+        :param day: The day
+        :type day: int()
+        :returns: The day name
+        :rtype: str()
+        """
+        if isinstance(year, six.string_types):
             year = int(year)
         if year == 1900 and month == 0 and day == 0:
             return Year.days[1]
@@ -129,10 +166,8 @@ def run():
     day = 0
     num_sunday_first_day_of_month = 0
     while True:
-        print "on: %s-%s-%s" % (year, month, day)
         if day == 0:
             day_of_week = Year.get_day_name_at_date(year, month, day)
-            print "first of month is: %s" % day_of_week
             if day_of_week == 'sunday':
                 num_sunday_first_day_of_month += 1
         if year == 2000:
@@ -140,7 +175,6 @@ def run():
                 if day == 30:
                     break
         if Year._days_in_month(month) == day:
-            print 'here'
             day = 0
             if month == 11:
                 year += 1
@@ -155,4 +189,4 @@ def run():
 if __name__ == '__main__':
     args = docopt(__doc__)
     answer = run()
-    print "Answer: %s" % answer
+    print("Answer: {}".format(answer))

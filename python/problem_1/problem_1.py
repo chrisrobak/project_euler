@@ -14,8 +14,16 @@ from docopt import docopt
 
 
 def problem_1(max_number):
+    """
+    Sum of all multiples of 3 or 5 below <max_number>
+
+    :param max_number: Max number to calculate
+    :type max_number: int()
+    :returns: Sum of all multiples of 3 or 5 below <max_number>
+    :rtype: int()
+    """
     answer = 0
-    for x in xrange(1, max_number):
+    for x in range(1, max_number):
         if x % 3 == 0 or x % 5 == 0:
             answer += x
     return answer
@@ -23,4 +31,4 @@ def problem_1(max_number):
 
 if __name__ == '__main__':
     args = docopt(__doc__)
-    print problem_1(int(args['<max_number>']))
+    print(problem_1(int(args['<max_number>'])))

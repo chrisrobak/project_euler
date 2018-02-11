@@ -19,6 +19,20 @@ known_paths = []
 
 
 def lattice_path(grid_size, x=0, y=0, paths_history=[]):
+    """
+    Brute force a lattice gride only going right + down
+
+    :param grid_size: How big of a grid to navigate
+    :type grid_size: int()
+    :param x: x location on the grid
+    :type x: int()
+    :param y: y location on the grid
+    :type y: int()
+    :param paths_history: choices made so far
+    :type paths_history: list()
+    :returns: None
+    :rtype: None
+    """
     global found_paths
     global known_paths
     if len(paths_history) > 0:
@@ -28,24 +42,10 @@ def lattice_path(grid_size, x=0, y=0, paths_history=[]):
     paths_history.append((x, y))
     while True:
         if x < grid_size:
-            # can move right
-            print "moving right: from %s -> (%s, %s)" % (
-                paths_history,
-                str(x + 1),
-                str(y)
-            )
-            # x += 1
             lattice_path(
                 grid_size, x+1, y, paths_history
             )
         if y < grid_size:
-            # can move down
-            print "moving down: from %s -> (%s, %s)" % (
-                paths_history,
-                str(x),
-                str(y+1)
-            )
-            # y += 1
             lattice_path(
                 grid_size, x, y+1, paths_history
             )
@@ -53,13 +53,11 @@ def lattice_path(grid_size, x=0, y=0, paths_history=[]):
             # reached end
             if paths_history not in known_paths:
                 known_paths.append(paths_history)
-                print "%d path complete %s" % (
-                    found_paths, paths_history
-                )
                 found_paths += 1
             break
         else:
             break
+    return found_paths
 
 
 def run(grid_size):
@@ -69,4 +67,4 @@ def run(grid_size):
 if __name__ == '__main__':
     args = docopt(__doc__)
     run(int(args['<grid_size>']))
-    print "Answer: %d" % found_paths
+    print("Answer: {}".format(found_paths))

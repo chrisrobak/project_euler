@@ -21,4 +21,4 @@ def run():
 if __name__ == '__main__':
     args = docopt(__doc__)
     answer = run()
-    print "Answer: %d" % answer
+    print("Answer: {}".format(answer))

@@ -18,12 +18,19 @@ from docopt import docopt
 
 
 def problem2(max_number):
+    """
+    Sum of even valued fibonacci under <max_number>
+
+    :param max_number: The max fibonacci value to consider
+    :type max_number: int()
+    :returns: The sum of the even valued fibonacci numbers
+    :rtype: int()
+    """
     answer = 0
     fib_value = 1
     current_number = 1
     previous_number = 1
     while fib_value < max_number:
-        print "Current_number: %s" % current_number
         fib_value = current_number
         if fib_value >= max_number:
             return answer
@@ -35,4 +42,4 @@ def problem2(max_number):
 
 if __name__ == '__main__':
     args = docopt(__doc__)
-    print problem2(int(args['<max_number>']))
+    print(problem2(int(args['<max_number>'])))

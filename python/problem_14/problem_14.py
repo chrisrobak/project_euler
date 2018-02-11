@@ -27,6 +27,14 @@ from docopt import docopt
 
 
 def build_collatz_chain(number):
+    """
+    Build a collatz chain starting at provided number
+
+    :param number: The start of the collatz chain
+    :type number: int()
+    :returns: A list representing the collatz chain
+    :rtype: list()
+    """
     chain = []
     if number == 1:
         return [1]
@@ -42,24 +50,27 @@ def build_collatz_chain(number):
 
 
 def run(max_num):
+    """
+    Provided a number find the number beneath it that creates
+    the longest collatz chain.
+
+    :param max_num: The maximum number to start a collatz chain
+    :type max_num: int()
+    :returns: The number which creates the longest collatz chain
+    :rtype: int()
+    """
     longest_chain = 0
+    number_with_longest_change = 0
     while max_num > 0:
         chain = build_collatz_chain(max_num)
         chain_size = len(chain)
-        # print "%s has %s chain" % (
-        #     max_num,
-        #     chain_size
-        # )
         if chain_size > longest_chain:
-            print "%s has longest chain so far: %s long" % (
-                max_num,
-                chain_size
-            )
             longest_chain = chain_size
+            number_with_longest_change = max_num
         max_num = max_num - 1
-    return longest_chain
+    return number_with_longest_change
 
 
 if __name__ == '__main__':
     args = docopt(__doc__)
-    print "Answer: %d" % run(int(args['<max_chain_start>']))
+    print("Answer: %d" % run(int(args['<max_chain_start>'])))

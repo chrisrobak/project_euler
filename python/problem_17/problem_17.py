@@ -38,6 +38,14 @@ lookup = {
 
 
 def three_digit_to_word(num):
+    """
+    Convert a three digit number to a word.
+
+    :param num: The number to convert
+    :type num: int()
+    :returns: A string describing the number
+    :rtype: str()
+    """
     if num % 100 == 0:
         return "%s hundred" % lookup[int(str(num)[0])]
     else:
@@ -51,6 +59,14 @@ def three_digit_to_word(num):
 
 
 def two_digit_to_word(num):
+    """
+    Convert a two digit number to a word
+
+    :param num: The number to convert
+    :type num: int()
+    :returns: A string describing the number
+    :rtype: str()
+    """
     if num in lookup:
         return num
     return "%s-%s" % (
@@ -60,6 +76,15 @@ def two_digit_to_word(num):
 
 
 def number_to_word(num):
+    """
+    Aggregate method, based on how large number is,
+    call specific function to format the number.
+
+    :param num: The number to convert
+    :type num: int()
+    :returns: A string describing the number
+    :rtype: str()
+    """
     if num in lookup:
         return lookup[num]
     elif num < 100:
@@ -73,16 +98,20 @@ def number_to_word(num):
 
 
 def run(max_num):
+    """
+    For each number under <max_num> add the number of letters
+    together to get the answer
+
+    :param max_num: The maximum number to start with
+    :type max_num: int()
+    :returns: The number of letters in all words under <max_num>
+    :rtype: int()
+    """
     answer = 0
-    for x in xrange(1, max_num + 1):
+    for x in range(1, max_num + 1):
         word = number_to_word(x)
         word = word.replace(' ', '').replace('-', '')
         num_letters = len(word)
-        print "%s: length=%s, %s" % (
-            x,
-            num_letters,
-            word
-        )
         answer += num_letters
     return answer
 
@@ -90,4 +119,4 @@ def run(max_num):
 if __name__ == '__main__':
     args = docopt(__doc__)
     answer = run(int(args['<max_num>']))
-    print "Answer: %d" % answer
+    print("Answer: {}".format(answer))
